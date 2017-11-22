@@ -23,6 +23,20 @@ add http://www.iconfont.cn/ lib
 4. only android need cp Fonts/IconFont.ttf android/src/main/assets/fonts
 
 
+## sync https://oblador.github.io/react-native-vector-icons/
+1.git clone https://oblador.github.io/react-native-vector-icons/
+
+2.cd react-native-vector-icons
+
+3.rm -rf .git
+
+4.rm -rf *.js
+
+5.cp react-native-vector-icons-iconfont/*.js iconfont readme.md 
+
+6.
+
+
 
  
 

@@ -1,7 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './App.css';
 import Entypo from '../../glyphmaps/Entypo.json';
 import EvilIcons from '../../glyphmaps/EvilIcons.json';
+import Feather from '../../glyphmaps/Feather.json';
 import FontAwesome from '../../glyphmaps/FontAwesome.json';
 import Foundation from '../../glyphmaps/Foundation.json';
 import Ionicons from '../../glyphmaps/Ionicons.json';
@@ -14,6 +16,7 @@ import Zocial from '../../glyphmaps/Zocial.json';
 const IconFamilies = {
   Entypo,
   EvilIcons,
+  Feather,
   FontAwesome,
   Foundation,
   Ionicons,

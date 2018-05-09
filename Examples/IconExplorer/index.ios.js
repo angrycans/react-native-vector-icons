@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   AppRegistry,
   NavigatorIOS,
-  StyleSheet,
+  StyleSheet, Text
 } from 'react-native';
 
 import IconSetList from './IconSetList';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,14 +16,7 @@ const styles = StyleSheet.create({
 
 export default function IconExplorer(props) {
   return (
-    <NavigatorIOS
-      style={styles.container}
-      initialRoute={{
-        title: 'IconExplorer',
-        component: IconSetList,
-      }}
-      itemWrapperStyle={styles.itemWrapper}
-    />
+    <Text>This text has <FontAwesome name="rocket" /> inline <FontAwesome name="hand-peace-o"> icons!</FontAwesome></Text>
   );
 }
 

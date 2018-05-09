@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+
 import './App.css';
+
 import Entypo from '../../glyphmaps/Entypo.json';
 import EvilIcons from '../../glyphmaps/EvilIcons.json';
 import Feather from '../../glyphmaps/Feather.json';
@@ -9,8 +11,8 @@ import Foundation from '../../glyphmaps/Foundation.json';
 import Ionicons from '../../glyphmaps/Ionicons.json';
 import MaterialCommunityIcons from '../../glyphmaps/MaterialCommunityIcons.json';
 import MaterialIcons from '../../glyphmaps/MaterialIcons.json';
-import SimpleLineIcons from '../../glyphmaps/SimpleLineIcons.json';
 import Octicons from '../../glyphmaps/Octicons.json';
+import SimpleLineIcons from '../../glyphmaps/SimpleLineIcons.json';
 import Zocial from '../../glyphmaps/Zocial.json';
 
 const IconFamilies = {
@@ -27,7 +29,9 @@ const IconFamilies = {
   Zocial,
 };
 
-class Icon extends Component {
+const WAITING_INTERVAL = 300;
+
+class Icon extends PureComponent {
   static propTypes = {
     family: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -54,10 +58,28 @@ const HeaderBar = (props) => {
   );
 };
 
-class SearchBar extends Component {
+class SearchBar extends PureComponent {
+  timer = null;
+
+  state = {
+    keyword: ''
+  };
+  
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.onSubmit(this.inputRef.value);
+  };
+
+  handleChange = (e) => {
+    e.preventDefault();
+    clearInterval(this.timer);
+    
+    this.setState({ keyword: this.inputRef.value });
+
+    this.timer = setTimeout(
+      () => this.props.onSubmit(this.state.keyword),
+      WAITING_INTERVAL
+    );
   };
 
   render() {
@@ -68,9 +90,11 @@ class SearchBar extends Component {
             <Icon family="FontAwesome" name="search" className="Search-Icon" />
             <input
               ref={ref => this.inputRef = ref}
+              onChange={this.handleChange}
               placeholder="Search for an icon"
               type="text"
-              className="Search-Input" />
+              className="Search-Input"
+            />
           </form>
         </div>
       </div>
@@ -78,7 +102,7 @@ class SearchBar extends Component {
   }
 }
 
-class App extends Component {
+class App extends PureComponent {
   constructor() {
     super();
     this.state = {
@@ -142,6 +166,14 @@ class App extends Component {
     );
   }
 
+  renderNotFound () {
+    return (
+      <div className="Result-Row">
+        <h2 className="Result-Title">Icon not found.</h2>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="App">
@@ -149,6 +181,7 @@ class App extends Component {
         <SearchBar onSubmit={this.handleSubmit} />
         <div className="Container">
           {this.state.matches.map(this.renderMatch)}
+          {this.state.matches.length === 0 && this.renderNotFound()}
         </div>
       </div>
     );
